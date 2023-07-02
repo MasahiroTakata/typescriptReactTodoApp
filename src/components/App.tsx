@@ -1,4 +1,5 @@
 import React, { useCallback } from 'react';
+import styled from "styled-components";
 import { MemoList } from './MemoList';
 import { useState, ChangeEvent } from 'react';
 
@@ -27,7 +28,12 @@ export const App = () => {
     <div>
       <h1>簡単メモアプリ</h1>
       <input type="text" onChange={handleChangeTodo} value={todoValue}/>
+      <SButton onClick={handleAddTodo}>追加</SButton>
       <MemoList memos={memos} handleDeleteTodo={handleDeleteTodo}/>
     </div>
   );
 }
+
+const SButton = styled.button`
+  margin-left: 16px;
+`;
