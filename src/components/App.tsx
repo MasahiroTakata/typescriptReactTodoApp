@@ -2,27 +2,24 @@ import React, { useCallback } from 'react';
 import styled from "styled-components";
 import { MemoList } from './MemoList';
 import { useState, ChangeEvent } from 'react';
+import { useMemoList } from '../hooks/useMemoList';
 
 export const App = () => {
+  const {memos, addTodo, deleteTodo } = useMemoList(); // カスタムフックを取得し、returnに記載した値を受け取る
   const [todoValue, setTodo] = useState<string>(''); // テキストボックスのstate関数
-  const [memos, setMemos] = useState<string[]>([]); // リストのstate関数
   // ToDoリストのstate関数
   const handleChangeTodo = (e: ChangeEvent<HTMLInputElement>) => {
     setTodo(e.target.value);
   }
   // リスト追加
   const handleAddTodo = () => {
-      const newMemos=[...memos]; // 配列の宣言
-      newMemos.push(todoValue);
-      setMemos(newMemos);
-      setTodo(''); // テキストを空にする
+    addTodo(todoValue); // カスタムフックのファイルへデータを渡す
+    setTodo("");
   };
   // リスト削除
   const handleDeleteTodo = useCallback((index : number) => {
-    const newMemos=[...memos]; // 配列の宣言
-    newMemos.splice(index, 1); // 配列の0から数えてindex番目のデータから1つ削除する（つまり、indexのデータのみ削除する）
-    setMemos(newMemos);}, [memos]
-  );
+    deleteTodo(index);
+  }, [memos]);
 
   return (
     <div>
